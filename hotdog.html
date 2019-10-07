@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Untitled Document</title>
+	<script language="javascript" type="text/javascript">
+
+		var discount;
+		var dogs;
+		var fries;
+		var drinks;
+		var dog_tot;
+		var meal_total;
+		var fry_tot;
+		var drink_tot;
+		var price_info = [];
+		var user_order = [];
+		var dog_cost = 3.25;
+		var fry_cost = 2.00;
+		var drink_cost = 1.50;
+
+
+		//READ IN USER info and ORDERS, Following COMMANDS all called by button
+		function read_run(user_dogs, user_fries, user_drinks){
+
+			user_dogs = document.getElementById("user_dogs").value;
+			user_fries = document.getElementById("user_fries").value;
+			user_drinks = document.getElementById("user_drinks").value;
+
+			user_name = document.getElementById("user_name").value;
+			var user_zip = document.getElementById("user_zip").value;
+
+			user_order = {user_dogs, user_fries, user_drinks};
+			price_info = {dog_cost, fry_cost, drink_cost};
+
+			calc_prices(price_info, user_order);
+			print_receipt(price_info);
+		}
+
+	
+
+		//CALC total price of orders
+		function calc_prices(price_info, user_order)
+		{
+			discount = false;
+
+			dog_tot = price_info.dog_cost * user_order.user_dogs;
+			fry_tot = price_info.fry_cost * user_order.user_fries;
+			drink_tot = price_info.drink_cost * user_order.user_drinks; 
+
+			var meals_tax = .0625;
+			var joes_discount = .8;
+
+			 meal_total = dog_tot + fry_tot + drink_tot;
+			if (meal_total >= 20){
+				discount = true;
+				meal_total = meal_total * joes_discount;
+			}
+				 meal_total += meal_total * .0625;
+		}
+
+		function print_receipt(price_info)
+		{
+			alert("Thank you for your order, " + user_name);
+			document.write("<br>" + "Joes Receipt" + "<br>");
+			document.write("ITEM: ---------- QUANTITY: ---------- UNIT PRICE ----------  ITEM TOTAL:" + "<br>");
+			document.write("Hotdog:" + " ---------------- " + user_order.user_dogs + " ---------------- $" + price_info.dog_cost + " ----------------  $" + dog_tot + "<br>"); 
+			document.write("French Fries" + " ----------------  " + user_order.user_fries + " ----------------  $" + price_info.fry_cost + " ---------------- $" + fry_tot + "<br>"); 
+			document.write("Drinks:" + " ---------------- " + user_order.user_drinks + " ---------------- $" + price_info.drink_cost + " ----------------  $" + drink_tot + "<br>");
+
+			if (discount)
+			{
+				document.write( "Joe's special discount: 20% off orders over $20!"+ "<br>");
+			}
+
+			document.write ("Tax: ---------------- 6.25%" + "<br>");
+			document.write("<br>" + "<br>" + "TOTAL is: " + meal_total.toFixed(2));
+		}
+		
+</script>
+</head>
+
+<body>
+	<h1>Joe's Hotdogs</h1>
+        <h2> Welcome to the official site of Joe's famous hotdogs </h2>
+        <img src="hotdog.jpg"; class = "center">
+        <p> Please place your order below </p>
+	<form>
+		<br>
+		<input type="string" id="user_name" placeholder="first name"><br>
+		<input type="input" id="user_zip" placeholder="zip code"><br>
+		<input type="number" id="user_dogs" placeholder="number of hot dogs"><br>
+		<input type="number" id="user_fries" placeholder="number of fries"><br>
+		<input type="number" id="user_drinks" placeholder="number of drinks"><br>
+		<input type='button' onclick='read_run()'value="Order">
+	</form>
+		
+		
+</script>
+	</script>
+</body>
+</html>
